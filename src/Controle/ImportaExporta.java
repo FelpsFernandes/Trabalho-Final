@@ -23,7 +23,8 @@ import java.util.logging.Logger;
  * @author Junior-PC
  */
 public class ImportaExporta {
-    private static final String diretorio = "c:/temp/2/test.txt";
+    private static final String diretorio = "C:/temp";
+    private static final String arquivo = "test.txt";
     private static ImportaExporta instance;
     
     private ImportaExporta() {
@@ -37,11 +38,12 @@ public class ImportaExporta {
     }
     
 
-    public void Grava(Controle controleAtu){
+    public boolean Grava(Controle controleAtu){
         try {
-            File arqDestino = new File(diretorio);
-            if (!arqDestino.exists()){
-                arqDestino.mkdir();
+            File diretorioDest = new File(diretorio);
+            File arqDestino = new File(diretorio + "/" + arquivo);
+            if (!diretorioDest.exists()){
+                diretorioDest.mkdir();
             }
             
             
@@ -52,20 +54,20 @@ public class ImportaExporta {
             oos.flush();
             oos.close();
             
+            return true;
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ImportaExporta.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ImportaExporta.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
     
     public Controle Le(){
         try{
             Controle controleAtu = null;    
-            File arqOrigem = new File(diretorio);
-            if (!arqOrigem.exists()){
-                arqOrigem.mkdir();
-            }
+            File arqOrigem = new File(diretorio + "/" + arquivo);
             if(arqOrigem.length() == 0 ){
                 return null;
             }
